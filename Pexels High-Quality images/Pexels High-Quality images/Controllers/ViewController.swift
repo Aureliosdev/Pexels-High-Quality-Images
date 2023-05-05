@@ -49,8 +49,8 @@ class ViewController: UIViewController {
         flowLayout?.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
         searchHistoryCollectionView.register(UINib(nibName: "SearchTextCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: SearchTextCollectionViewCell.identifier)
         searchHistoryCollectionView.dataSource = self
-        
-        searchTextArray = getSaveSearchTextArray()
+        searchHistoryCollectionView.delegate  = self
+        resetSearchTextArray()
     }
   
     
@@ -234,10 +234,26 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegateFl
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let photo = self.photos[indexPath.item]
-        let url = photo.src.large2X
-        let vc = ImageViewController(imageURL: url)
-        self.navigationController?.pushViewController(vc, animated: true)
+        switch collectionView {
+        
+        case imageCollectionView:
+            let photo = self.photos[indexPath.item]
+            let url = photo.src.large2X
+            
+            let vc = ImageViewController(imageURL: url)
+            self.navigationController?.pushViewController(vc, animated: true)
+            
+        case searchHistoryCollectionView:
+            // Извлекаем текст из массива 'searchTextArray' c соответсвтующим индексом
+            let searchText: String = searchTextArray[indexPath.item]
+            // Для свойства 'text' у 'searchBar' присваеваем ранее извлеченный текст
+            mainSearchBar.text = searchText
+            // Вызываем метод search(), который отправляет запрос для поиска изображений по тексту в поисковой панели
+            search()
+            
+        default:
+            ()
+        }
       
     }
 }
