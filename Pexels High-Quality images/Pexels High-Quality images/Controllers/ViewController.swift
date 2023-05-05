@@ -141,27 +141,26 @@ class ViewController: UIViewController {
         return reversedSavedSearchTextArray
     }
     func resetSearchTextArray() {
-        // Теперь вместо значения метода getSortedSearchTextArray() присваевается значение другого метода getUniqueSearchTextArray()
+       
         self.searchTextArray = getUniqueSearchTextArray()
     }
     func getUniqueSearchTextArray() -> [String] {
         
-        // Создается константа и устанавливается начальное значение, где присваевается возвращаемое значение методом getSortedSearchTextArray()
+       
         let sortedSearchTextArray: [String] = getSortedSearchTextArray()
         
-        // Создается пустая переменная для хранения уникальных текстовых запросов
+       
         var sortedSearchTextArrayWithUniqueValues: [String] = []
         
-        // Идет итерация по каждомоу элементу массива 'sortedSearchTextArray'
+    
         sortedSearchTextArray.forEach { searchText in
             
-            // Идет проверка на отсутствия элемента в массиве 'sortedSearchTextArrayWithUniqueValues'
-            // Метод 'contains' возвращает TRUE если 'searchText' уже содержится в массиве 'sortedSearchTextArrayWithUniqueValues'
+         
             if !sortedSearchTextArrayWithUniqueValues.contains(searchText) {
                 sortedSearchTextArrayWithUniqueValues.append(searchText)
             }
         }
-        // Возвращает массив с уникальныеми текстами
+        
         return sortedSearchTextArrayWithUniqueValues
     }
 }
@@ -244,11 +243,11 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegateFl
             self.navigationController?.pushViewController(vc, animated: true)
             
         case searchHistoryCollectionView:
-            // Извлекаем текст из массива 'searchTextArray' c соответсвтующим индексом
+          
             let searchText: String = searchTextArray[indexPath.item]
-            // Для свойства 'text' у 'searchBar' присваеваем ранее извлеченный текст
+           
             mainSearchBar.text = searchText
-            // Вызываем метод search(), который отправляет запрос для поиска изображений по тексту в поисковой панели
+           
             search()
             
         default:

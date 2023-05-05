@@ -48,7 +48,7 @@ class ImageViewController: UIViewController {
 //                }
                 
         } else if let data = data {
-            print("hELLO")
+            print("Got it!")
                 DispatchQueue.main.async {
                     self.imageView.image = UIImage(data: data)
                     self.activityIndicator.stopAnimating()
